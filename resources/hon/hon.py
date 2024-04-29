@@ -41,25 +41,30 @@ class HonPlugin:
 		self._auto_reconnect_task = None
 		self._loop = None
 		self._logger = logging.getLogger(__name__)
-		self._facade = None
-		self._spaman= None
-		self._device_info = None
 
 	async def main(self):
-		_LOGGER.info('   main')
+		self._logger('   main')
+
 		self._jeedom_publisher = Publisher(self._config.callback_url, self._config.api_key, self._config.cycle)
 		if not await self._jeedom_publisher.test_callback():
 			return
 
 		self._loop = asyncio.get_running_loop()
-		self._send_task = self._jeedom_publisher.create_send_task()
-		await self._connectingToSpas()
+
+		async with Hon(USER, PASSWORD) as hon:
+        for appliance in hon.appliances:
+            print(appliance.nick_name)
+
+
+
+		# self._send_task = self._jeedom_publisher.create_send_task()
+
 		self._listen_task = Listener.create_listen_task(self._config.socket_host, self._config.socket_port, self._on_socket_message)
 		self._auto_reconnect_task = asyncio.create_task(self._auto_reconnect())
 
 		await self.add_signal_handler()
-		await asyncio.sleep(1) # allow  all tasks to start
-
+		await asyncio.sleep(1) 
+		self._logger("Ready")
 		await asyncio.gather(self._auto_reconnect_task, self._listen_task, self._send_task)
 
 
@@ -113,14 +118,17 @@ parser.add_argument("--callback", help="Callback", type=str)
 parser.add_argument("--apikey", help="Apikey", type=str)
 parser.add_argument("--pid", help="Pid file", type=str)
 parser.add_argument("--socketport", help="Daemon port", type=str)
-parser.add_argument("--clientId", help="Client Id", type=str)
+# parser.add_argument("--clientId", help="Client Id", type=str)
+parser.add_argument("--userName", help="User name", type=str)
+parser.add_argument("--password", help="Password", type=str)
+
 
 args = parser.parse_args()
 config = Config(**vars(args))
 Utils.init_logger(config.log_level)
 _LOGGER = logging.getLogger(__name__)
 logging.getLogger('asyncio').setLevel(logging.WARNING)
-#logging.getLogger('pyworxcloud').setLevel(Utils.convert_log_level(config.log_level))
+logging.getLogger('honPlugin').setLevel(Utils.convert_log_level(config.log_level))
 
 try:
 	_LOGGER.info('Starting daemon')
