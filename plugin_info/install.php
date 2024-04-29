@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 // Fonction exécutée automatiquement après l'installation du plugin
 function hon_install() {
     $pluginId='hon';
-    $dependencyInfo = geckospa::dependancy_info();
+    $dependencyInfo = hon::dependancy_info();
     if (!isset($dependencyInfo['state'])) {
         message::add($pluginId, __('Veuilez vérifier les dépendances', __FILE__));
     } elseif ($dependencyInfo['state'] == 'nok') {
