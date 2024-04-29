@@ -18,13 +18,25 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-function template_install() {
+function hon_install() {
+    $pluginId='hon';
+    $dependencyInfo = geckospa::dependancy_info();
+    if (!isset($dependencyInfo['state'])) {
+        message::add($pluginId, __('Veuilez vérifier les dépendances', __FILE__));
+    } elseif ($dependencyInfo['state'] == 'nok') {
+        try {
+            $plugin = plugin::byId($pluginId);
+            $plugin->dependancy_install();
+        } catch (\Throwable $th) {
+            message::add($pluginId, __('Cette mise à jour nécessite de réinstaller les dépendances même si elles sont marquées comme OK', __FILE__));
+        }
+    }
 }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-function template_update() {
+function hon_update() {
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
-function template_remove() {
+function hon_remove() {
 }

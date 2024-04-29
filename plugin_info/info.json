@@ -1,6 +1,6 @@
 {
-	"id": "template",
-	"name": "Template",
+	"id": "hon",
+	"name": "hon",
 	"pluginVersion": "0.1",
 	"specialAttributes": {
 		"object": {
@@ -37,7 +37,7 @@
 		}
 	},
 	"description": {
-		"fr_FR": "Template servant de base à la création de plugins pour Jeedom"
+		"fr_FR": "hon servant de base à la création de plugins pour Jeedom"
 	},
 	"licence": "AGPL",
 	"author": "Jeedom SAS",
