@@ -23,6 +23,7 @@ import json
 import asyncio
 import functools
 import uuid
+from pyhon import hon
 
 from config import Config
 from jeedom.utils import Utils
@@ -31,15 +32,7 @@ from geckolib import GeckoAsyncSpaMan, GeckoSpaEvent
 
 SPA_ADDRESS = None
 
-class GeckoSpaMan(GeckoAsyncSpaMan):
-	async def handle_event(self, event: GeckoSpaEvent, **kwargs) -> None:
-		# Uncomment this line to see events generated
-		# print(f"{event}: {kwargs}")
-		#_LOGGER.info("received event : " + event + " | args : " + kwargs)
-		_LOGGER.info("ChD received event -> " + event.name)
-		pass
-
-class Hon:	
+class HonPlugin:	
 	def __init__(self, config: Config) -> None:
 		self._config = config
 		self._jeedom_publisher = None
@@ -134,8 +127,8 @@ try:
 	_LOGGER.info('Log level: %s', config.log_level)
 	Utils.write_pid(str(config.pid_filename))
 
-	hon = Hon(config)
-	asyncio.run(hon.main())
+	honPlugin = HonPlugin(config)
+	asyncio.run(honPlugin.main())
 except Exception as e:
 	exception_type, exception_object, exception_traceback = sys.exc_info()
 	filename = exception_traceback.tb_frame.f_code.co_filename
