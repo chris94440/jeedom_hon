@@ -20,7 +20,7 @@ require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class hon extends eqLogic {
 
-  const PYTHON_PATH=__DIR__.'/../../resources/venv/versions/3.11.9/bin/python3.11'
+  const PYTHON_PATH=__DIR__.'/../../resources/venv/versions/3.11.9/bin/python3.11';
 
   public static function dependancy_install() {
     log::remove(__CLASS__ . '_update');
