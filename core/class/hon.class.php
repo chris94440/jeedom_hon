@@ -24,6 +24,7 @@ class hon extends eqLogic {
 
   public static function dependancy_install() {
     log::remove(__CLASS__ . '_update');
+    log::add(__CLASS__,'info',__FUNCTION__ . ' -> '.__DIR__ . '/../../resources/install_#stype#.sh ')
     return array('script' => __DIR__ . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder(__CLASS__) . '/dependency', 'log' => log::getPathToLog(__CLASS__ . '_update'));
 }
 
