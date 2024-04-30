@@ -9,7 +9,7 @@ else
   exit
 fi
 TMP_FILE=/tmp/jeedom/hon/post-install_hon_bashrc
-export PYENV_ROOT="$(realpath resources)/_pyenv"
+export PYENV_ROOT="$(realpath resources)/venv"
 PYENV_VERSION="3.11"
 
 touch "$PROGRESS_FILE"
